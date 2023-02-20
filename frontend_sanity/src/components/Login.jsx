@@ -1,14 +1,16 @@
 import React from "react";
-import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 import { GoogleLogin } from "@react-oauth/google";
+
+const LOGIN_BG_VIDEO_URL =
+  "https://www.apple.com/105/media/us/iphone-se/2020/90024c0f-285a-4bf5-af04-2c38de97b06e/anim/arcade-loop/large.mp4";
 
 const Login = () => {
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className=" relative w-full h-full">
         <video
-          src={shareVideo}
+          src={LOGIN_BG_VIDEO_URL}
           type="video/mp4"
           loop
           controls={false}
