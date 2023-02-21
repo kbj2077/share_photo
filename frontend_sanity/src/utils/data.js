@@ -50,6 +50,7 @@ export const categories = [
   },
 ];
 
+// api
 export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
   image{
     asset->{

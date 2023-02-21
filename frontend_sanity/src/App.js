@@ -14,7 +14,7 @@ const App = () => {
         : localStorage.clear();
     // 路由重定向
     if (!User) navigate("/login");
-  }, []);
+  }, [navigate]);
 
   return (
     <Routes>

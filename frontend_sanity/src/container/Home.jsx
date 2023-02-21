@@ -25,7 +25,7 @@ const Home = () => {
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
-  }, []);
+  }, [userInfo?.googleId]);
 
   useEffect(() => {
     scrollRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });

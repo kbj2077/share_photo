@@ -8,7 +8,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.render(
   <Router>
-    <GoogleOAuthProvider>
+    <GoogleOAuthProvider
+      clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
+    >
       <App />
     </GoogleOAuthProvider>
   </Router>,
