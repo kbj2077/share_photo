@@ -14,7 +14,7 @@ const Sidebar = ({ closeToggle, user }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
-
+  console.log("user", user);
   return (
     <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
       <div className="flex flex-col">
@@ -34,11 +34,9 @@ const Sidebar = ({ closeToggle, user }) => {
             onClick={handleCloseSidebar}
           >
             <RiHomeFill />
-            Home
+            首页
           </NavLink>
-          <h3 className="mt-2 px-5 text-base 2xl:text-xl">
-            Discover cateogries
-          </h3>
+          <h3 className="mt-2 px-5 text-base 2xl:text-xl">图片类型</h3>
           {categories.slice(0, categories.length - 1).map((category) => (
             <NavLink
               to={`/category/${category.name}`}

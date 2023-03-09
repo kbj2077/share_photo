@@ -20,22 +20,22 @@ const Home = () => {
       : localStorage.clear();
 
   useEffect(() => {
-    const query = userQuery(userInfo?.googleId);
-
+    const query = userQuery(userInfo?._id);
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
-  }, [userInfo?.googleId]);
-
+  }, [userInfo?._id]);
   useEffect(() => {
     scrollRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   });
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
+      {/* 侧边栏 */}
       <div className="hidden md:flex h-screen flex-initial">
         <Sidebar user={user && user} />
       </div>
+
       <div className="flex md:hidden flex-row">
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
           <HiMenu

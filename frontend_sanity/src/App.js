@@ -12,7 +12,6 @@ const App = () => {
       localStorage.getItem("user") !== "undefined"
         ? JSON.parse(localStorage.getItem("user"))
         : localStorage.clear();
-    console.log(User)
     // 路由重定向
     User ? navigate('/') : navigate('/login');
   }, [navigate]);
