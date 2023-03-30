@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'ProtoMono', sans-serif;
   }
 }
 
@@ -15,6 +15,11 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@font-face {
+  font-family: 'ProtoMono';
+  src: url('./assets/WoYuJianNiHeJuChunQiu-2.ttf') format('truetype');
 }

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import { MdDelete } from "react-icons/md";
+import React, { useState } from 'react';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { MdDelete } from 'react-icons/md';
 
-import { categories } from "../utils/data";
-import { client } from "../client";
-import Spinner from "./Spinner";
+import { categories } from '../utils/data';
+import { client } from '../client';
+import Spinner from './Spinner';
 
 const CreatePin = ({ user }) => {
-  const [title, setTitle] = useState("");
-  const [about, setAbout] = useState("");
+  const [title, setTitle] = useState('');
+  const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
   const [destination, setDestination] = useState();
   const [fields, setFields] = useState();
@@ -23,16 +23,16 @@ const CreatePin = ({ user }) => {
     const selectedFile = e.target.files[0];
     // uploading asset to sanity
     if (
-      selectedFile.type === "image/png" ||
-      selectedFile.type === "image/svg" ||
-      selectedFile.type === "image/jpeg" ||
-      selectedFile.type === "image/gif" ||
-      selectedFile.type === "image/tiff"
+      selectedFile.type === 'image/png' ||
+      selectedFile.type === 'image/svg' ||
+      selectedFile.type === 'image/jpeg' ||
+      selectedFile.type === 'image/gif' ||
+      selectedFile.type === 'image/tiff'
     ) {
       setWrongImageType(false);
       setLoading(true);
       client.assets
-        .upload("image", selectedFile, {
+        .upload('image', selectedFile, {
           contentType: selectedFile.type,
           filename: selectedFile.name,
         })
@@ -41,7 +41,7 @@ const CreatePin = ({ user }) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.log("Upload failed:", error.message);
+          console.log('Upload failed:', error.message);
         });
     } else {
       setLoading(false);
@@ -52,26 +52,26 @@ const CreatePin = ({ user }) => {
   const savePin = () => {
     if (title && about && destination && imageAsset?._id && category) {
       const doc = {
-        _type: "pin",
+        _type: 'pin',
         title,
         about,
         destination,
         image: {
-          _type: "image",
+          _type: 'image',
           asset: {
-            _type: "reference",
+            _type: 'reference',
             _ref: imageAsset?._id,
           },
         },
         userId: user._id,
         postedBy: {
-          _type: "postedBy",
+          _type: 'postedBy',
           _ref: user._id,
         },
         category,
       };
       client.create(doc).then(() => {
-        navigate("/");
+        navigate('/');
       });
     } else {
       setFields(true);
@@ -101,12 +101,11 @@ const CreatePin = ({ user }) => {
                     <p className="font-bold text-2xl">
                       <AiOutlineCloudUpload />
                     </p>
-                    <p className="text-lg">Click to upload</p>
+                    <p className="text-lg">点击选择图片</p>
                   </div>
 
                   <p className="mt-32 text-gray-400">
-                    Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or
-                    TIFF less than 20MB
+                    推荐: 使用高清 JPG, JPEG, SVG, PNG, GIF 或者 TIFF 低于 20MB
                   </p>
                 </div>
                 <input
@@ -140,7 +139,7 @@ const CreatePin = ({ user }) => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Add your title"
+            placeholder="标题"
             className="outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
           />
           {user && (
@@ -157,21 +156,21 @@ const CreatePin = ({ user }) => {
             type="text"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            placeholder="Tell everyone what your Pin is about"
+            placeholder="图片信息"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input
             type="url"
             vlaue={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Add a destination link"
+            placeholder="图片链接"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
 
           <div className="flex flex-col">
             <div>
               <p className="mb-2 font-semibold text:lg sm:text-xl">
-                Choose Pin Category
+                选择图片种类
               </p>
               <select
                 onChange={(e) => {
@@ -180,12 +179,13 @@ const CreatePin = ({ user }) => {
                 className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
               >
                 <option value="others" className="sm:text-bg bg-white">
-                  Select Category
+                  选择种类
                 </option>
                 {categories.map((item) => (
                   <option
                     className="text-base border-0 outline-none capitalize bg-white text-black "
-                    value={item.name}
+                    value={item.category}
+                    key={item.name}
                   >
                     {item.name}
                   </option>
@@ -198,7 +198,7 @@ const CreatePin = ({ user }) => {
                 onClick={savePin}
                 className="bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none"
               >
-                Save Pin
+                保存
               </button>
             </div>
           </div>

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { MdDownloadForOffline } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useState } from 'react';
+import { MdDownloadForOffline } from 'react-icons/md';
+import { Link, useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
-import { client, urlFor } from "../client";
-import MasonryLayout from "./MasonryLayout";
-import { pinDetailMorePinQuery, pinDetailQuery } from "../utils/data";
-import Spinner from "./Spinner";
+import { client, urlFor } from '../client';
+import MasonryLayout from './MasonryLayout';
+import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
+import Spinner from './Spinner';
 
 const PinDetail = ({ user }) => {
   const { pinId } = useParams();
   const [pins, setPins] = useState();
   const [pinDetail, setPinDetail] = useState();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
 
   const fetchPinDetails = () => {
@@ -42,17 +42,17 @@ const PinDetail = ({ user }) => {
       client
         .patch(pinId)
         .setIfMissing({ comments: [] })
-        .insert("after", "comments[-1]", [
+        .insert('after', 'comments[-1]', [
           {
             comment,
             _key: uuidv4(),
-            postedBy: { _type: "postedBy", _ref: user._id },
+            postedBy: { _type: 'postedBy', _ref: user._id },
           },
         ])
         .commit()
         .then(() => {
           fetchPinDetails();
-          setComment("");
+          setComment('');
           setAddingComment(false);
         });
     }
@@ -67,7 +67,7 @@ const PinDetail = ({ user }) => {
       {pinDetail && (
         <div
           className="flex xl:flex-row flex-col m-auto bg-white"
-          style={{ maxWidth: "1500px", borderRadius: "32px" }}
+          style={{ maxWidth: '1500px', borderRadius: '32px' }}
         >
           <div className="flex justify-center items-center md:items-start flex-initial">
             <img
@@ -108,7 +108,7 @@ const PinDetail = ({ user }) => {
               />
               <p className="font-bold">{pinDetail?.postedBy.userName}</p>
             </Link>
-            <h2 className="mt-5 text-2xl">Comments</h2>
+            <h2 className="mt-5 text-2xl">评论</h2>
             <div className="max-h-370 overflow-y-auto">
               {pinDetail?.comments?.map((item) => (
                 <div
@@ -138,7 +138,7 @@ const PinDetail = ({ user }) => {
               <input
                 className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
                 type="text"
-                placeholder="Add a comment"
+                placeholder="快来评论一下吧~"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
@@ -147,7 +147,7 @@ const PinDetail = ({ user }) => {
                 className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
                 onClick={addComment}
               >
-                {addingComment ? "Doing..." : "Done"}
+                {addingComment ? '正在上传...' : '评论'}
               </button>
             </div>
           </div>
@@ -155,7 +155,7 @@ const PinDetail = ({ user }) => {
       )}
       {pins?.length > 0 && (
         <h2 className="text-center font-bold text-2xl mt-8 mb-4">
-          More like this
+          你可能喜欢的图片
         </h2>
       )}
       {pins ? (

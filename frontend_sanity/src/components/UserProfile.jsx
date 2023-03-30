@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import {
   userCreatedPinsQuery,
   userQuery,
   userSavedPinsQuery,
-} from "../utils/data";
-import { client } from "../client";
-import MasonryLayout from "./MasonryLayout";
-import Spinner from "./Spinner";
+} from '../utils/data';
+import { client } from '../client';
+import MasonryLayout from './MasonryLayout';
+import Spinner from './Spinner';
 
 const activeBtnStyles =
-  "bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none";
+  'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles =
-  "bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none";
+  'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
 
 const UserProfile = () => {
   const [user, setUser] = useState();
   const [pins, setPins] = useState();
-  const [text, setText] = useState("Created");
-  const [activeBtn, setActiveBtn] = useState("created");
-  const navigate = useNavigate();
+  const [text, setText] = useState('Created');
+  const [activeBtn, setActiveBtn] = useState('created');
   const { userId } = useParams();
 
   const User =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
+    localStorage.getItem('user') !== 'undefined'
+      ? JSON.parse(localStorage.getItem('user'))
       : localStorage.clear();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const UserProfile = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (text === "Created") {
+    if (text === 'Created') {
       const createdPinsQuery = userCreatedPinsQuery(userId);
 
       client.fetch(createdPinsQuery).then((data) => {
@@ -50,12 +49,6 @@ const UserProfile = () => {
       });
     }
   }, [text, userId]);
-
-  const logout = () => {
-    localStorage.clear();
-
-    navigate("/login");
-  };
 
   if (!user) return <Spinner message="Loading profile" />;
 
@@ -85,7 +78,7 @@ const UserProfile = () => {
                   console.log(credentialResponse);
                 }}
                 onError={() => {
-                  console.log("Login Failed");
+                  console.log('Login Failed');
                 }}
               />
             )}
@@ -96,10 +89,10 @@ const UserProfile = () => {
             type="button"
             onClick={(e) => {
               setText(e.target.textContent);
-              setActiveBtn("created");
+              setActiveBtn('created');
             }}
             className={`${
-              activeBtn === "created" ? activeBtnStyles : notActiveBtnStyles
+              activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles
             }`}
           >
             创建
@@ -108,10 +101,10 @@ const UserProfile = () => {
             type="button"
             onClick={(e) => {
               setText(e.target.textContent);
-              setActiveBtn("saved");
+              setActiveBtn('saved');
             }}
             className={`${
-              activeBtn === "saved" ? activeBtnStyles : notActiveBtnStyles
+              activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles
             }`}
           >
             收藏

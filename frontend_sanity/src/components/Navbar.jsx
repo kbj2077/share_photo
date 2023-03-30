@@ -5,6 +5,11 @@ import { IoMdAdd, IoMdSearch } from 'react-icons/io';
 const Navbar = ({ searchTerm, setSearchTerm, user }) => {
   const navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.clear();
+
+    navigate('/login');
+  };
   if (user) {
     return (
       <div className="flex gap-2 md:gap-5 w-full mt-5 pb-7 ">
@@ -13,7 +18,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
           <input
             type="text"
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search"
+            placeholder="搜索"
             value={searchTerm}
             onFocus={() => navigate('/search')}
             className="p-2 w-full bg-white outline-none"
@@ -21,11 +26,24 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
         </div>
         <div className="flex gap-3 ">
           <Link to={`user-profile/${user?._id}`} className="hidden md:block">
-            <img src={user.image} alt="user-pic" className="w-14 h-12 rounded-lg " />
+            <img
+              src={user.image}
+              alt="user-pic"
+              className="w-14 h-12 rounded-lg "
+            />
           </Link>
-          <Link to="/create-pin" className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center">
+          <Link
+            to="/create-pin"
+            className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center"
+          >
             <IoMdAdd />
           </Link>
+          <div
+            className="rounded-lg w-24 flex justify-center items-center h-12 border-2 border-black cursor-pointer hover:scale-95"
+            onClick={() => logout()}
+          >
+            退出登录
+          </div>
         </div>
       </div>
     );
