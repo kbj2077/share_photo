@@ -27,7 +27,7 @@ const Pin = ({ pin }) => {
   };
 
   let alreadySaved = pin?.save?.filter(
-    (item) => item?.postedBy?._id === user?.googleId
+    (item) => item?.postedBy?._id === user?._id
   );
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
@@ -35,17 +35,17 @@ const Pin = ({ pin }) => {
   const savePin = (id) => {
     if (alreadySaved?.length === 0) {
       setSavingPost(true);
-
+      console.log('xxxyyy', user);
       client
         .patch(id)
         .setIfMissing({ save: [] })
         .insert('after', 'save[-1]', [
           {
             _key: uuidv4(),
-            userId: user?.googleId,
+            userId: user?._id,
             postedBy: {
               _type: 'postedBy',
-              _ref: user?.googleId,
+              _ref: user?._id,
             },
           },
         ])
@@ -63,7 +63,7 @@ const Pin = ({ pin }) => {
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
         onClick={() => navigate(`/pin-detail/${_id}`)}
-        className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
+        className=" relative  cursor-zoom-in w-auto hover:shadow-2xl shadow-md rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {image && (
           <img
@@ -123,7 +123,7 @@ const Pin = ({ pin }) => {
                   {destination?.slice(8, 17)}...
                 </a>
               ) : undefined}
-              {postedBy?._id === user?.googleId && (
+              {postedBy?._id === user?._id && (
                 <button
                   type="button"
                   onClick={(e) => {

@@ -30,17 +30,9 @@ const Feed = () => {
   }, [categoryId]);
   const ideaName = categoryId || 'new';
   if (loading) {
-    return (
-      <Spinner message={`We are adding ${ideaName} ideas to your feed!`} />
-    );
+    return <Spinner message={`正在加载${ideaName}数据!`} />;
   }
-  return (
-    <div>
-      {pins && (
-        <MasonryLayout pins={pins} />
-      )}
-    </div>
-  );
+  return <div>{pins && <MasonryLayout pins={pins} />}</div>;
 };
 
 export default Feed;

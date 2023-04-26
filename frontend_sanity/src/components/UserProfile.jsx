@@ -18,7 +18,7 @@ const notActiveBtnStyles =
 const UserProfile = () => {
   const [user, setUser] = useState();
   const [pins, setPins] = useState();
-  const [text, setText] = useState('Created');
+  const [text, setText] = useState('created');
   const [activeBtn, setActiveBtn] = useState('created');
   const { userId } = useParams();
 
@@ -35,15 +35,15 @@ const UserProfile = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (text === 'Created') {
+    console.log(text);
+    if (text === 'created') {
       const createdPinsQuery = userCreatedPinsQuery(userId);
-
       client.fetch(createdPinsQuery).then((data) => {
         setPins(data);
       });
     } else {
       const savedPinsQuery = userSavedPinsQuery(userId);
-
+      console.log('savedPinsQuery', savedPinsQuery);
       client.fetch(savedPinsQuery).then((data) => {
         setPins(data);
       });
@@ -87,8 +87,8 @@ const UserProfile = () => {
         <div className="text-center mb-7">
           <button
             type="button"
-            onClick={(e) => {
-              setText(e.target.textContent);
+            onClick={() => {
+              setText('created');
               setActiveBtn('created');
             }}
             className={`${
@@ -100,7 +100,7 @@ const UserProfile = () => {
           <button
             type="button"
             onClick={(e) => {
-              setText(e.target.textContent);
+              setText('save');
               setActiveBtn('saved');
             }}
             className={`${
